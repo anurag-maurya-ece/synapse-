@@ -116,11 +116,7 @@ function App() {
           <a className="navbar-logo" onClick={() => navigate('home')} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <img src={synapseLogo} alt="Synapse Logo" style={{ width: '28px', height: '28px', border: '1.5px solid #05060f', borderRadius: '50%', boxShadow: '0.1rem 0.1rem #05060f' }} />
             <span style={{ fontWeight: 900, fontSize: '1.35rem', fontFamily: "'Inter Tight', sans-serif", letterSpacing: '-0.02em' }}>
-              <span style={{
-                background: 'linear-gradient(135deg, #10B981 0%, #2563EB 50%, #8B5CF6 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
-              }}>Synapse</span>
+              <span style={{ color: '#05060f' }}>Synapse</span>
             </span>
           </a>
 
@@ -274,11 +270,7 @@ function App() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-3)' }}>
               <img src={synapseLogo} alt="Synapse Logo" style={{ width: '24px', height: '24px', border: '1.5px solid #05060f', borderRadius: '50%', boxShadow: '0.1rem 0.1rem #05060f' }} />
               <span style={{ fontWeight: 900, fontSize: '1.2rem', fontFamily: "'Inter Tight', sans-serif", letterSpacing: '-0.02em' }}>
-                <span style={{
-                  background: 'linear-gradient(135deg, #10B981 0%, #2563EB 50%, #8B5CF6 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent'
-                }}>Synapse</span>
+                <span style={{ color: '#05060f' }}>Synapse</span>
               </span>
             </div>
             <p style={{ fontSize: '0.88rem', color: '#4a4a57', lineHeight: '1.6', marginBottom: 'var(--space-4)' }}>

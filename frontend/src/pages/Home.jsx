@@ -118,11 +118,7 @@ export default function Home({ setPage }) {
               letterSpacing: '-0.02em',
             }}>
               From Campus to Career, <br />
-              We Connect <span style={{
-                background: 'linear-gradient(135deg, var(--color-primary) 10%, var(--color-secondary) 50%, var(--color-accent) 95%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}>Generations</span>
+              We Connect <span style={{ color: 'var(--color-primary)' }}>Generations</span>
             </h1>
 
             <h2 style={{
