@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, Mail, Lock, LogIn, ArrowRight, UserPlus, Sparkles } from 'lucide-react';
+import { User, Mail, Lock, LogIn, ArrowRight, UserPlus, Sparkles, Eye, EyeOff } from 'lucide-react';
 import synapseLogo from '../assets/synapse_logo.png';
 
 export default function Login({ onAuthSuccess }) {
@@ -11,6 +11,8 @@ export default function Login({ onAuthSuccess }) {
   const [error, setError] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -165,14 +167,33 @@ export default function Login({ onAuthSuccess }) {
                 <Lock size={16} />
               </span>
               <input 
-                type="password" 
+                type={showPassword ? 'text' : 'password'}
                 className="form-input" 
-                style={{ paddingLeft: '38px' }}
+                style={{ paddingLeft: '38px', paddingRight: '40px' }}
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required 
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: 'absolute',
+                  right: '12px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  background: 'none',
+                  border: 'none',
+                  color: 'var(--color-text-muted)',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: 0
+                }}
+              >
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
             </div>
           </div>
 
@@ -184,14 +205,33 @@ export default function Login({ onAuthSuccess }) {
                   <Lock size={16} />
                 </span>
                 <input 
-                  type="password" 
+                  type={showConfirmPassword ? 'text' : 'password'}
                   className="form-input" 
-                  style={{ paddingLeft: '38px' }}
+                  style={{ paddingLeft: '38px', paddingRight: '40px' }}
                   placeholder="••••••••"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required 
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  style={{
+                    position: 'absolute',
+                    right: '12px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    background: 'none',
+                    border: 'none',
+                    color: 'var(--color-text-muted)',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: 0
+                  }}
+                >
+                  {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
               </div>
             </div>
           )}

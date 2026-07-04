@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { connectDB } from './db.js';
+import { connectDB, db } from './db.js';
 import mentorRoutes from './routes/mentors.js';
 import bookingRoutes from './routes/bookings.js';
 import forumRoutes from './routes/forum.js';
@@ -25,6 +25,29 @@ app.use('/api/mentors', mentorRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/forum', forumRoutes);
 app.use('/api/auth', authRoutes);
+
+// Newsletter Subscription
+app.post('/api/newsletter/subscribe', async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return res.status(400).json({ error: 'Email address is required.' });
+    }
+    const normalizedEmail = email.toLowerCase().trim();
+    
+    // Check if already subscribed
+    const existing = await db.subscribers.findByEmail(normalizedEmail);
+    if (existing) {
+      return res.status(400).json({ error: 'This email is already subscribed.' });
+    }
+    
+    await db.subscribers.create(normalizedEmail);
+    res.status(201).json({ message: 'Subscribed successfully!' });
+  } catch (err) {
+    console.error('Newsletter error:', err);
+    res.status(500).json({ error: 'Server error. Please try again.' });
+  }
+});
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

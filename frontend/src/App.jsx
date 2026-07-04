@@ -6,6 +6,7 @@ import MentorList from './pages/MentorList';
 import Forum from './pages/Forum';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
+import InfoPage from './pages/InfoPage';
 import synapseLogo from './assets/synapse_logo.png';
 
 function App() {
@@ -13,6 +14,38 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('synapse_user') || 'null'));
   const [token, setToken] = useState(localStorage.getItem('synapse_token') || '');
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [newsletterMessage, setNewsletterMessage] = useState('');
+  const [newsletterMsgType, setNewsletterMsgType] = useState(''); // 'success' or 'error'
+
+  const handleNewsletterSubmit = async (e) => {
+    e.preventDefault();
+    if (!newsletterEmail) return;
+    setNewsletterMessage('');
+    try {
+      const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const res = await fetch(`${API_BASE}/api/newsletter/subscribe`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: newsletterEmail })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setNewsletterMessage('🎉 Subscribed successfully!');
+        setNewsletterMsgType('success');
+        setNewsletterEmail('');
+        setTimeout(() => setNewsletterMessage(''), 6000);
+      } else {
+        setNewsletterMessage(data.error || 'Failed to subscribe.');
+        setNewsletterMsgType('error');
+        setTimeout(() => setNewsletterMessage(''), 6000);
+      }
+    } catch (err) {
+      setNewsletterMessage('⚠️ Connection error. Please try again.');
+      setNewsletterMsgType('error');
+      setTimeout(() => setNewsletterMessage(''), 6000);
+    }
+  };
 
   const location = useLocation();
   const navigateHook = useNavigate();
@@ -23,6 +56,9 @@ function App() {
   else if (location.pathname === '/forum') page = 'forum';
   else if (location.pathname === '/dashboard') page = 'dashboard';
   else if (location.pathname === '/login') page = 'login';
+  else if (['/privacy', '/terms', '/conduct', '/support'].includes(location.pathname)) {
+    page = location.pathname.substring(1);
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -32,7 +68,8 @@ function App() {
 
   const navigate = (p) => {
     // If trying to access protected page and not logged in, redirect to login
-    if (p !== 'home' && p !== 'login' && !user) {
+    const publicPages = ['home', 'login', 'privacy', 'terms', 'conduct', 'support'];
+    if (!publicPages.includes(p) && !user) {
       navigateHook('/login');
     } else {
       navigateHook(p === 'home' ? '/' : `/${p}`);
@@ -212,6 +249,10 @@ function App() {
           <Route path="/forum" element={user ? <Forum user={user} /> : <Navigate to="/login" replace />} />
           <Route path="/dashboard" element={user && user.role === 'admin' ? <Dashboard /> : <Navigate to="/" replace />} />
           <Route path="/login" element={<Login onAuthSuccess={handleAuthSuccess} />} />
+          <Route path="/privacy" element={<InfoPage type="privacy" />} />
+          <Route path="/terms" element={<InfoPage type="terms" />} />
+          <Route path="/conduct" element={<InfoPage type="conduct" />} />
+          <Route path="/support" element={<InfoPage type="support" />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
@@ -264,14 +305,14 @@ function App() {
               Resources
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.88rem' }}>
-              <li><a href="#" style={{ color: '#4a4a57', fontWeight: 600 }}>Privacy Policy</a></li>
-              <li><a href="#" style={{ color: '#4a4a57', fontWeight: 600 }}>Terms of Service</a></li>
-              <li><a href="#" style={{ color: '#4a4a57', fontWeight: 600 }}>Alumni Code of Conduct</a></li>
-              <li><a href="#" style={{ color: '#4a4a57', fontWeight: 600 }}>Help & Support</a></li>
+              <li><a onClick={() => navigate('privacy')} style={{ color: '#4a4a57', cursor: 'pointer', fontWeight: 600 }}>Privacy Policy</a></li>
+              <li><a onClick={() => navigate('terms')} style={{ color: '#4a4a57', cursor: 'pointer', fontWeight: 600 }}>Terms of Service</a></li>
+              <li><a onClick={() => navigate('conduct')} style={{ color: '#4a4a57', cursor: 'pointer', fontWeight: 600 }}>Alumni Code of Conduct</a></li>
+              <li><a onClick={() => navigate('support')} style={{ color: '#4a4a57', cursor: 'pointer', fontWeight: 600 }}>Help & Support</a></li>
             </ul>
           </div>
 
-          {/* Column 4: Newsletter Subscription */}
+          {/* Column 4: Newsletter */}
           <div>
             <h4 style={{ fontFamily: "'Inter Tight', sans-serif", fontSize: '0.95rem', fontWeight: 800, color: '#05060f', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 'var(--space-3)' }}>
               Stay Updated
@@ -279,11 +320,13 @@ function App() {
             <p style={{ fontSize: '0.88rem', color: '#4a4a57', marginBottom: '12px' }}>
               Subscribe to get notified about new mentors and career insights.
             </p>
-            <form onSubmit={(e) => { e.preventDefault(); alert("Subscribed successfully!"); }} style={{ display: 'flex', gap: '8px' }}>
+            <form onSubmit={handleNewsletterSubmit} style={{ display: 'flex', gap: '8px' }}>
               <input
                 type="email"
                 placeholder="you@university.edu"
                 className="form-input"
+                value={newsletterEmail}
+                onChange={(e) => setNewsletterEmail(e.target.value)}
                 style={{
                   padding: '8px 12px',
                   fontSize: '0.85rem',
@@ -296,6 +339,23 @@ function App() {
                 Join
               </button>
             </form>
+
+            {newsletterMessage && (
+              <div style={{
+                marginTop: '12px',
+                padding: '8px 12px',
+                borderRadius: '0.4rem',
+                border: '2px solid #05060f',
+                fontSize: '0.8rem',
+                fontWeight: 800,
+                boxShadow: '0.1rem 0.1rem #05060f',
+                background: newsletterMsgType === 'success' ? '#ECFDF5' : '#FEF2F2',
+                color: newsletterMsgType === 'success' ? '#065F46' : '#991B1B',
+                transition: 'all 0.2s ease-out'
+              }}>
+                {newsletterMessage}
+              </div>
+            )}
           </div>
         </div>
 
@@ -312,10 +372,11 @@ function App() {
           color: '#8b8b99',
         }}>
           <span>&copy; {new Date().getFullYear()} Synapse. All rights reserved.</span>
-          <span style={{ display: 'flex', gap: '16px' }}>
-            <a href="#" style={{ color: '#8b8b99' }}>Facebook</a>
-            <a href="#" style={{ color: '#8b8b99' }}>LinkedIn</a>
-            <a href="#" style={{ color: '#8b8b99' }}>GitHub</a>
+          <span style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+            <a href="https://portfolio.anuragmaurya.dev" target="_blank" rel="noopener noreferrer" style={{ color: '#8b8b99', fontWeight: 600 }}>Portfolio</a>
+            <a href="https://instagram.com/anuragmaurya.co" target="_blank" rel="noopener noreferrer" style={{ color: '#8b8b99', fontWeight: 600 }}>Instagram</a>
+            <a href="https://linkedin.com/in/anurag-maurya-nsut" target="_blank" rel="noopener noreferrer" style={{ color: '#8b8b99', fontWeight: 600 }}>LinkedIn</a>
+            <a href="https://github.com/anurag-maurya-ece" target="_blank" rel="noopener noreferrer" style={{ color: '#8b8b99', fontWeight: 600 }}>GitHub</a>
           </span>
         </div>
       </footer>

@@ -259,20 +259,62 @@ export default function Forum({ user }) {
                     <span><strong>{post.authorName}</strong> <span style={{ color: 'var(--color-text-muted)' }}>({post.authorRole})</span></span>
                   </div>
 
-                  <div style={{ display: 'flex', gap: '16px' }}>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                     <button
                       onClick={(e) => handleLike(post._id, e)}
-                      style={{ background: 'none', border: 'none', color: 'var(--color-text-body)', display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}
+                      style={{
+                        background: post.likes > 0 ? 'var(--color-secondary-light)' : '#ffffff',
+                        border: '2px solid #05060f',
+                        color: '#05060f',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        cursor: 'pointer',
+                        padding: '6px 12px',
+                        borderRadius: '20px',
+                        fontSize: '0.8rem',
+                        fontWeight: 750,
+                        boxShadow: '0.1rem 0.1rem #05060f',
+                        transition: 'all 0.1s ease-out'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translate(-1px, -1px)';
+                        e.currentTarget.style.boxShadow = '0.15rem 0.15rem #05060f';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'none';
+                        e.currentTarget.style.boxShadow = '0.1rem 0.1rem #05060f';
+                      }}
+                      onMouseDown={(e) => {
+                        e.currentTarget.style.transform = 'translate(1px, 1px)';
+                        e.currentTarget.style.boxShadow = 'none';
+                      }}
+                      onMouseUp={(e) => {
+                        e.currentTarget.style.transform = 'none';
+                        e.currentTarget.style.boxShadow = '0.1rem 0.1rem #05060f';
+                      }}
                     >
-                      <ThumbsUp size={15} style={{
-                        color: post.likes > 0 ? 'var(--color-secondary)' : 'var(--color-text-muted)',
+                      <ThumbsUp size={13} style={{
+                        color: '#05060f',
                         fill: post.likes > 0 ? 'var(--color-secondary)' : 'none',
                       }} />
-                      <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{post.likes || 0}</span>
+                      <span>{post.likes || 0}</span>
                     </button>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: 'var(--color-text-muted)', fontSize: '0.85rem' }}>
-                      <MessageSquare size={15} />
-                      <span style={{ fontWeight: 600 }}>{post.comments ? post.comments.length : 0}</span>
+                    <div style={{
+                      background: '#ffffff',
+                      border: '2px solid #05060f',
+                      color: '#05060f',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      padding: '6px 12px',
+                      borderRadius: '20px',
+                      fontSize: '0.8rem',
+                      fontWeight: 750,
+                      boxShadow: '0.1rem 0.1rem #05060f'
+                    }}>
+                      <MessageSquare size={13} style={{ color: '#05060f' }} />
+                      <span>{post.comments ? post.comments.length : 0}</span>
                     </div>
                   </div>
                 </div>
@@ -387,13 +429,20 @@ export default function Forum({ user }) {
                 <button
                   onClick={(e) => handleLike(selectedPost._id, e)}
                   className="btn btn-secondary btn-sm"
-                  style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 14px' }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    padding: '8px 14px',
+                    background: selectedPost.likes > 0 ? 'var(--color-secondary-light)' : 'var(--color-bg-subtle)',
+                    borderColor: '#05060f'
+                  }}
                 >
                   <ThumbsUp size={14} style={{
-                    color: selectedPost.likes > 0 ? 'var(--color-secondary)' : 'var(--color-text-muted)',
+                    color: '#05060f',
                     fill: selectedPost.likes > 0 ? 'var(--color-secondary)' : 'none',
                   }} />
-                  Like ({selectedPost.likes || 0})
+                  <span style={{ fontWeight: 700 }}>Like ({selectedPost.likes || 0})</span>
                 </button>
               </div>
             </div>

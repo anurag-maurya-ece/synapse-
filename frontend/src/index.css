@@ -680,45 +680,39 @@ img {
   margin-bottom: 1rem;
 }
 
-/* Skills Checklist */
+/* Skills Tags */
 .mentor-card-skills {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 1.2rem;
   list-style: none;
   padding: 0;
 }
 
 .mentor-card-skill-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.84rem;
-  font-weight: 500;
-  color: #2a2a35;
+  display: inline-block;
+  padding: 5px 12px;
+  background: var(--color-bg-muted);
+  color: #05060f;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  border: 1.5px solid #05060f;
+  box-shadow: 0.08rem 0.08rem #05060f;
+  transition: all 0.15s ease-out;
 }
 
-.mentor-card-skill-check {
-  width: 18px;
-  height: 18px;
-  background: var(--color-primary);
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.mentor-card-skill-check svg {
-  width: 11px;
-  height: 11px;
-  color: #fff;
+.mentor-card-skill-item:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 0.12rem 0.12rem #05060f;
+  background: var(--color-primary-light);
 }
 
 /* Availability */
 .mentor-card-avail-section {
-  border-top: 2px dashed #e0e0e6;
+  border-top: 2.5px solid #05060f;
+  background: var(--color-bg-muted);
   padding: 1rem 1.4rem;
 }
 
@@ -755,29 +749,29 @@ img {
 .mentor-card-cta {
   width: 100%;
   padding: 12px 20px;
-  background: #05060f;
-  color: #fdfdfd;
+  background: var(--color-primary);
+  color: #05060f;
   border: 2.5px solid #05060f;
   border-radius: 0.6rem;
   font-family: 'Inter Tight', 'Inter', sans-serif;
   font-size: 0.88rem;
-  font-weight: 700;
+  font-weight: 800;
   cursor: pointer;
+  box-shadow: 0.2rem 0.2rem #05060f;
   transition: all 0.15s ease-out;
   text-align: center;
 }
 
 .mentor-card-cta:hover {
-  background: var(--color-primary);
-  border-color: #05060f;
+  background: var(--color-primary-dark);
   color: #fff;
-  box-shadow: 0.2rem 0.2rem #05060f;
+  box-shadow: 0.3rem 0.3rem #05060f;
   transform: translate(-2px, -2px);
 }
 
 .mentor-card-cta:active {
   box-shadow: none;
-  transform: translate(0, 0);
+  transform: translate(2px, 2px);
 }
 
 /* ─── Responsive ─── */

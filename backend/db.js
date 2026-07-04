@@ -163,6 +163,7 @@ initJsonFile('mentors.json', defaultMentors);
 initJsonFile('bookings.json', defaultBookings);
 initJsonFile('forum.json', defaultPosts);
 initJsonFile('users.json', defaultUsers);
+initJsonFile('subscribers.json', []);
 
 // Define Mongoose Schemas (if MongoDB is running)
 const mentorSchema = new mongoose.Schema({
@@ -213,10 +214,15 @@ const userSchema = new mongoose.Schema({
   role: { type: String, enum: ['student', 'admin'], default: 'student' }
 }, { timestamps: true });
 
+const subscriberSchema = new mongoose.Schema({
+  email: { type: String, required: true, unique: true }
+}, { timestamps: true });
+
 let MentorModel;
 let BookingModel;
 let ForumPostModel;
 let UserModel;
+let SubscriberModel;
 
 let isMongoConnected = false;
 
@@ -238,6 +244,7 @@ const connectDB = async () => {
     BookingModel = mongoose.model('Booking', bookingSchema);
     ForumPostModel = mongoose.model('ForumPost', forumPostSchema);
     UserModel = mongoose.model('User', userSchema);
+    SubscriberModel = mongoose.model('Subscriber', subscriberSchema);
     
     isMongoConnected = true;
     
@@ -576,6 +583,28 @@ const db = {
         data.push(newUser);
         writeJson('users.json', data);
         return newUser;
+      }
+    }
+  },
+  subscribers: {
+    create: async (email) => {
+      if (isMongoConnected) {
+        const sub = new SubscriberModel({ email });
+        return await sub.save();
+      } else {
+        const data = readJson('subscribers.json');
+        if (data.includes(email)) return { email };
+        data.push(email);
+        writeJson('subscribers.json', data);
+        return { email };
+      }
+    },
+    findByEmail: async (email) => {
+      if (isMongoConnected) {
+        return await SubscriberModel.findOne({ email }).lean();
+      } else {
+        const data = readJson('subscribers.json');
+        return data.includes(email) ? { email } : null;
       }
     }
   }
