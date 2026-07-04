@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { LayoutDashboard, Menu, X, LogOut, LogIn, User } from 'lucide-react';
 import Home from './pages/Home';
 import MentorList from './pages/MentorList';
@@ -8,11 +9,20 @@ import Login from './pages/Login';
 import synapseLogo from './assets/synapse_logo.png';
 
 function App() {
-  const [page, setPage] = useState('home');
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('synapse_user') || 'null'));
   const [token, setToken] = useState(localStorage.getItem('synapse_token') || '');
+
+  const location = useLocation();
+  const navigateHook = useNavigate();
+
+  // Determine current active page based on pathname
+  let page = 'home';
+  if (location.pathname === '/mentors') page = 'mentors';
+  else if (location.pathname === '/forum') page = 'forum';
+  else if (location.pathname === '/dashboard') page = 'dashboard';
+  else if (location.pathname === '/login') page = 'login';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -23,9 +33,9 @@ function App() {
   const navigate = (p) => {
     // If trying to access protected page and not logged in, redirect to login
     if (p !== 'home' && p !== 'login' && !user) {
-      setPage('login');
+      navigateHook('/login');
     } else {
-      setPage(p);
+      navigateHook(p === 'home' ? '/' : `/${p}`);
     }
     setMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -36,9 +46,9 @@ function App() {
     setToken(t);
     // If admin, go to dashboard, else go to mentors directory
     if (u.role === 'admin') {
-      setPage('dashboard');
+      navigateHook('/dashboard');
     } else {
-      setPage('mentors');
+      navigateHook('/mentors');
     }
   };
 
@@ -47,7 +57,7 @@ function App() {
     localStorage.removeItem('synapse_user');
     setUser(null);
     setToken('');
-    setPage('home');
+    navigateHook('/');
   };
 
   // Build nav links based on login state and role
@@ -60,17 +70,6 @@ function App() {
       navLinks.push({ key: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard size={14} /> });
     }
   }
-
-  const renderPage = () => {
-    switch (page) {
-      case 'home':      return <Home setPage={navigate} />;
-      case 'mentors':   return user ? <MentorList user={user} /> : <Login onAuthSuccess={handleAuthSuccess} />;
-      case 'forum':     return user ? <Forum user={user} /> : <Login onAuthSuccess={handleAuthSuccess} />;
-      case 'dashboard': return user && user.role === 'admin' ? <Dashboard /> : <Home setPage={navigate} />;
-      case 'login':     return <Login onAuthSuccess={handleAuthSuccess} />;
-      default:          return <Home setPage={navigate} />;
-    }
-  };
 
   return (
     <div className="app-container">
@@ -206,7 +205,15 @@ function App() {
 
       {/* ─── Main Content ─── */}
       <main className={page === 'home' ? '' : 'main-content'}>
-        {renderPage()}
+        <Routes>
+          <Route path="/" element={<Home setPage={navigate} />} />
+          <Route path="/home" element={<Navigate to="/" replace />} />
+          <Route path="/mentors" element={user ? <MentorList user={user} /> : <Navigate to="/login" replace />} />
+          <Route path="/forum" element={user ? <Forum user={user} /> : <Navigate to="/login" replace />} />
+          <Route path="/dashboard" element={user && user.role === 'admin' ? <Dashboard /> : <Navigate to="/" replace />} />
+          <Route path="/login" element={<Login onAuthSuccess={handleAuthSuccess} />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </main>
 
       {/* ─── Footer ─── */}
