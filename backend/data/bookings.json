@@ -1,0 +1,28 @@
+[
+  {
+    "_id": "b1",
+    "mentorId": "m1",
+    "mentorName": "Alex Rivera",
+    "studentName": "John Doe",
+    "studentEmail": "john.doe@student.edu",
+    "date": "2026-07-10",
+    "timeSlot": "6:00 PM - 7:00 PM",
+    "topic": "System Design Mock Interview",
+    "description": "I have an upcoming interview and would love to practice system design, specifically scaling a web application.",
+    "status": "Pending",
+    "createdAt": "2026-07-04T05:19:40.394Z"
+  },
+  {
+    "_id": "b2",
+    "mentorId": "m2",
+    "mentorName": "Priya Sharma",
+    "studentName": "Sarah Chen",
+    "studentEmail": "sarah.c@student.edu",
+    "date": "2026-07-08",
+    "timeSlot": "5:00 PM - 6:00 PM",
+    "topic": "Career Advice & Transition",
+    "description": "Switching from Software Engineering to Data Science. Want to understand what projects to focus on.",
+    "status": "Approved",
+    "createdAt": "2026-07-04T05:19:40.395Z"
+  }
+]

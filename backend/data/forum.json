@@ -1,0 +1,49 @@
+[
+  {
+    "_id": "p1",
+    "title": "How to prepare for FAANG PM interviews?",
+    "content": "Hi everyone! I am currently a senior student planning to apply for Associate Product Manager (APM) roles. I wanted to ask the alumni here about the structure of product design and metrics questions, and what resources you recommend. Thank you!",
+    "category": "Career Advice",
+    "authorName": "Kevin Liu",
+    "authorRole": "Student",
+    "likes": 12,
+    "likedBy": [],
+    "comments": [
+      {
+        "_id": "c1",
+        "content": "I recommend checking out 'Decode and Conquer' and 'Cracking the PM Interview'. They are the gold standards. Also, practice mock interviews on platforms like Stella or with alumni here!",
+        "authorName": "Marcus Vance",
+        "authorRole": "Alumni",
+        "createdAt": "2026-07-04T05:19:40.395Z"
+      },
+      {
+        "_id": "c2",
+        "content": "Totally agree with Marcus. Focus heavily on structure. Never jump straight into the solution; always define the user personas first.",
+        "authorName": "Elena Rostova",
+        "authorRole": "Alumni",
+        "createdAt": "2026-07-04T05:19:40.395Z"
+      }
+    ],
+    "createdAt": "2026-07-04T05:19:40.395Z"
+  },
+  {
+    "_id": "p2",
+    "title": "Is it worth learning Kubernetes in college?",
+    "content": "I am a sophomore and seeing Kubernetes listed in almost every software engineering job description. Should I spend time learning it now, or focus more on core DS & Algo?",
+    "category": "Technical Questions",
+    "authorName": "Aarav Patel",
+    "authorRole": "Student",
+    "likes": 8,
+    "likedBy": [],
+    "comments": [
+      {
+        "_id": "c3",
+        "content": "Focus 80% on DS & Algo first to get past interviews. However, understanding the basics of Docker and Kubernetes will give you a massive edge in team projects and internships. Learn it on the side!",
+        "authorName": "Alex Rivera",
+        "authorRole": "Alumni",
+        "createdAt": "2026-07-04T05:19:40.395Z"
+      }
+    ],
+    "createdAt": "2026-07-04T05:19:40.395Z"
+  }
+]

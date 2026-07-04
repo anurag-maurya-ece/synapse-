@@ -1,0 +1,18 @@
+[
+  {
+    "_id": "u1",
+    "name": "Admin User",
+    "email": "admin@synapse.com",
+    "password": "$2b$10$7rtz2nEqPTmHMi7S0AKTA.y56j0jHVXfN6pmS8qSaJvXkp9Ntop4i",
+    "role": "admin",
+    "createdAt": "2026-07-04T09:05:51.001Z"
+  },
+  {
+    "_id": "u2",
+    "name": "Student User",
+    "email": "student@synapse.com",
+    "password": "$2b$10$bbEfj.peAhi/WNGen30CuuZlL9J6dI0PegJFd467.DH8omfrMYOj2",
+    "role": "student",
+    "createdAt": "2026-07-04T09:05:51.001Z"
+  }
+]

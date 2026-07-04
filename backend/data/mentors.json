@@ -1,0 +1,82 @@
+[
+  {
+    "_id": "m1",
+    "name": "Alex Rivera",
+    "email": "alex.rivera@alumni.edu",
+    "domain": "Software Engineering",
+    "experience": 8,
+    "bio": "Tech Lead at Google. Alumni of Class of 2018. Passionate about helping students break into tech, system design, and career growth.",
+    "availability": [
+      "Mon, Wed: 6:00 PM - 8:00 PM",
+      "Sat: 10:00 AM - 2:00 PM"
+    ],
+    "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
+    "rating": 4.9,
+    "skills": [
+      "System Design",
+      "Go",
+      "Java",
+      "Kubernetes",
+      "React"
+    ]
+  },
+  {
+    "_id": "m2",
+    "name": "Priya Sharma",
+    "email": "priya.sharma@alumni.edu",
+    "domain": "Data Science",
+    "experience": 5,
+    "bio": "Senior Data Scientist at Netflix. Class of 2021. Specializes in Machine Learning, recommendation engines, and interview prep.",
+    "availability": [
+      "Tue, Thu: 5:00 PM - 7:00 PM"
+    ],
+    "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150",
+    "rating": 4.8,
+    "skills": [
+      "Python",
+      "TensorFlow",
+      "SQL",
+      "Machine Learning",
+      "AB Testing"
+    ]
+  },
+  {
+    "_id": "m3",
+    "name": "Marcus Vance",
+    "email": "marcus.v@alumni.edu",
+    "domain": "Product Management",
+    "experience": 10,
+    "bio": "Principal Product Manager at Amazon. Alumni of Class of 2016. Can help with PM interview prep, product strategy, and resume reviews.",
+    "availability": [
+      "Fri: 3:00 PM - 6:00 PM",
+      "Sun: 1:00 PM - 4:00 PM"
+    ],
+    "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150",
+    "rating": 5,
+    "skills": [
+      "Product Strategy",
+      "Product Roadmap",
+      "UX Research",
+      "Metrics"
+    ]
+  },
+  {
+    "_id": "m4",
+    "name": "Elena Rostova",
+    "email": "elena.r@alumni.edu",
+    "domain": "UX Design",
+    "experience": 6,
+    "bio": "Senior UX Designer at Airbnb. Alumni of Class of 2020. Helping students with portfolio reviews, UI/UX methodologies, and design thinking.",
+    "availability": [
+      "Sat, Sun: 2:00 PM - 5:00 PM"
+    ],
+    "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150",
+    "rating": 4.7,
+    "skills": [
+      "Figma",
+      "User Research",
+      "Wireframing",
+      "Interaction Design"
+    ]
+  }
+]
